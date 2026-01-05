@@ -1,14 +1,14 @@
 import Sequelize, { DataTypes } from "sequelize";
 
 export const up = async ({ context: queryInterface }) => {
-  await queryInterface.createTable("UserProfiles", {
+  await queryInterface.createTable("Notifications", {
     id: {
       allowNull: false,
       defaultValue: DataTypes.UUID,
       primaryKey: true,
       type: Sequelize.UUID,
     },
-    userId: {
+    user_id: {
       type: Sequelize.UUID,
       allowNull: false,
       references: {
