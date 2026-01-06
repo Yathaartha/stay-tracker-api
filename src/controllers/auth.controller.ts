@@ -23,3 +23,9 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+export const getProfile = async (req: Request, res: Response) => {
+  const userId = req.user?.userId;
+
+  res.json({ message: `Your user ID is ${userId}` });
+};
+

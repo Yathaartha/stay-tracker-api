@@ -1,8 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../db/models/User.js";
-import type { ROLES } from "../utils/types.js";
-import { error } from "node:console";
+import type { ROLES } from "../utils/types/types.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
