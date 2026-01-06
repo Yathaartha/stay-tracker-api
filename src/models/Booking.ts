@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../index.js";
+import sequelize from "../db/index.js";
 import Listing from "./Listing.js";
 import User from "./User.js";
 import Notification from "./Notification.js";
