@@ -1,0 +1,7 @@
+{
+  "watch": ["src"],
+  "ext": "ts,js,json",
+  "legacyWatch": true,
+  "interval": 1000
+}
+
