@@ -20,6 +20,20 @@ services:
       - "8080:8080"
     depends_on:
       - db
+  api:
+    build: .
+    container_name: node_api
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./uploads:/app/uploads
 
 volumes:
   pgdata:
