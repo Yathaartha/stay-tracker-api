@@ -15,6 +15,8 @@ const startServer = async () => {
 
     app.use(express.json());
 
+    app.use("/uploads", express.static("uploads"));
+
     app.get("/", (req: Request, res: Response) => {
       res.send("Stay Tracker API is running!");
     });
