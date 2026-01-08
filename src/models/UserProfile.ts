@@ -1,7 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/index.js";
-import User from "./User.js";
-
 class UserProfile extends Model {
   public id!: string;
   public userId!: string;
@@ -91,13 +89,6 @@ UserProfile.init(
     timestamps: true,
   }
 );
-
-UserProfile.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default UserProfile;
 

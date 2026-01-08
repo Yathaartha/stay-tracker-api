@@ -1,8 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/index.js";
-import Booking from "./Booking.js";
-import User from "./User.js";
-
 class Review extends Model {
   public id!: string;
   public bookingId!: string;
@@ -48,20 +45,6 @@ Review.init(
     timestamps: true,
   }
 );
-
-Review.belongsTo(Booking, {
-  foreignKey: "bookingId",
-  as: "booking",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-Review.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default Review;
 

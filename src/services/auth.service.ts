@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import type { ROLES } from "../utils/types/types.js";
+import { userRepository } from "../db/repositories/user.repository.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -28,7 +29,7 @@ export class AuthService {
   }
 
   static async login(username: string, password: string) {
-    const user = await User.findOne({ where: { username } });
+    const user = await userRepository.findByUsername(username);
 
     if (!user) {
       throw new Error("User does not exist");

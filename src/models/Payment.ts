@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/index.js";
-import Booking from "./Booking.js";
 
 class Payment extends Model {
   public id!: string;
@@ -43,13 +42,6 @@ Payment.init(
     timestamps: true,
   }
 );
-
-Payment.hasOne(Booking, {
-  foreignKey: "paymentId",
-  as: "booking",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default Payment;
 

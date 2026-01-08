@@ -1,10 +1,5 @@
 import sequelize from "../db/index.js";
 import { DataTypes, Model } from "sequelize";
-import UserProfile from "./UserProfile.js";
-import Listing from "./Listing.js";
-import Booking from "./Booking.js";
-import Notification from "./Notification.js";
-import Review from "./Review.js";
 
 class User extends Model {
   public id!: string;
@@ -42,41 +37,6 @@ User.init(
     timestamps: true,
   }
 );
-
-User.hasOne(UserProfile, {
-  foreignKey: "userId",
-  as: "profile",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-User.hasMany(Listing, {
-  foreignKey: "hostId",
-  as: "listings",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-User.hasMany(Booking, {
-  foreignKey: "userId",
-  as: "bookings",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-User.hasMany(Notification, {
-  foreignKey: "userId",
-  as: "notifications",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-User.hasMany(Review, {
-  foreignKey: "userId",
-  as: "reviews",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default User;
 

@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/index.js";
-import Listing from "./Listing.js";
 
 class Availability extends Model {
   id!: string;
@@ -52,13 +51,6 @@ Availability.init(
     timestamps: true,
   }
 );
-
-Availability.belongsTo(Listing, {
-  foreignKey: "listingId",
-  as: "listing",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default Availability;
 

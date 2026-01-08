@@ -1,8 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/index.js";
-import User from "./User.js";
-import Booking from "./Booking.js";
-import Availability from "./Availability.js";
 
 class Listing extends Model {
   id!: string;
@@ -119,27 +116,6 @@ Listing.init(
     timestamps: true,
   }
 );
-
-Listing.belongsTo(User, {
-  foreignKey: "hostId",
-  as: "host",
-  onUpdate: "CASCADE",
-  onDelete: "CASCADE",
-});
-
-Listing.hasMany(Booking, {
-  foreignKey: "listingId",
-  as: "bookings",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-Listing.hasMany(Availability, {
-  foreignKey: "listingId",
-  as: "availabilities",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default Listing;
 

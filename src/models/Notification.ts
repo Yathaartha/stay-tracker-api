@@ -1,7 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/index.js";
-import User from "./User.js";
-import Booking from "./Booking.js";
 
 class Notification extends Model {
   public id!: string;
@@ -52,20 +50,6 @@ Notification.init(
     timestamps: true,
   }
 );
-
-Notification.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-
-Notification.belongsTo(Booking, {
-  foreignKey: "bookingId",
-  as: "booking",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
 
 export default Notification;
 
