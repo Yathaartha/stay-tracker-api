@@ -1,262 +1,103 @@
-# Stay Tracker — Backend API
+# 🚀 Node.js TypeScript Backend Boilerplate
 
-A full-stack backend API for a **Nepal-focused accommodation booking platform**, supporting homestays and hotels with **role-based access**, **availability-aware bookings**, and **AI-powered travel assistance**.
+A scalable, production-ready backend API built with **Node.js**, **TypeScript**, **Express**, and **Sequelize (PostgreSQL)**. This project uses **Docker** for local development and **Umzug** for code-first migrations.
 
-This project is built as a **personal portfolio project** to demonstrate backend engineering, API design, database modeling, and practical AI integration.
+## 🛠 Tech Stack
 
----
-
-## ✨ Features
-
-### Core Platform
-
-- User authentication (JWT-based)
-- Role-based access control (Guest, Host, Admin)
-- Accommodation listings (homestays & hotels)
-- Availability calendar & booking management
-- Reviews & ratings
-- Search and filtering
-- Nepal-specific regions and pricing (NPR)
-
-### Host Tools
-
-- Create and manage listings
-- Set pricing and availability
-- View and manage bookings
-- AI-generated listing descriptions (English ↔ Nepali)
-
-### AI Integrations
-
-- AI-powered **Nepal Travel Assistant**
-- Context-aware recommendations using platform data
-- Review summarization
-- Prompt-engineered responses with guardrails
-
-### Admin Tools
-
-- Listing approval & moderation
-- Review moderation
-- Basic user management
+- **Runtime:** Node.js (v20+)
+- **Language:** TypeScript
+- **Database:** PostgreSQL
+- **ORM:** Sequelize
+- **Migrations:** Umzug (Type-safe migrations)
+- **Validation:** Zod
+- **Auth:** JSON Web Tokens (JWT) & Bcrypt
+- **Tools:** Docker, Adminer (DB GUI)
 
 ---
 
-## 🏗️ Tech Stack
+## 🏗 Project Architecture
 
-**Backend**
-
-- Node.js
-- Express (or NestJS)
-- PostgreSQL
-- JWT Authentication
-
-**AI**
-
-- OpenAI API (prompt engineering + RAG)
-- Structured outputs
-- Guardrails for budget, dates, and scope
-
-**Infrastructure**
-
-- Docker
-- Environment-based configuration
+- `src/db/models`: Database schema definitions.
+- `src/db/repositories`: Data access layer (BaseRepository pattern).
+- `src/services`: Business logic and third-party integrations.
+- `src/controllers`: Request handling and response formatting.
+- `src/middlewares`: Auth, Validation, and File Upload logic.
+- `src/validations`: Zod schemas for request validation.
 
 ---
 
-## 🧠 Architecture Overview
+## 🚀 Quick Start (Docker)
 
-```
-Client (Web)
-   |
-   | REST API
-   v
-Backend API (Node.js)
-   |
-   | ORM / Queries
-   v
-PostgreSQL Database
-   |
-   | Context Retrieval
-   v
-AI Service (OpenAI API)
-```
+### 1. Environment Setup
 
-### Key Design Decisions
+Create a `.env` file in the root directory:
 
-- Clear separation of concerns (auth, listings, bookings, AI)
-- AI responses are **grounded in platform data**
-- No real payments (mock booking flow for safety and simplicity)
-
----
-
-## 🗂️ Data Models (High-Level)
-
-- **User**
-
-  - id, name, email, role
-
-- **Listing**
-
-  - id, title, description, type, location, price
-
-- **Availability**
-
-  - listing_id, date, is_available
-
-- **Booking**
-
-  - user_id, listing_id, dates, status
-
-- **Review**
-
-  - booking_id, rating, comment
-
----
-
-## 🤖 AI Features Explained
-
-### 1. AI Travel Assistant
-
-A chat-based assistant designed to act as a **Nepal travel expert**.
-
-**Capabilities**
-
-- Suggest accommodations based on:
-
-  - Budget
-  - Travel dates
-  - Preferences
-
-- Ask follow-up questions if information is missing
-- Only recommends listings available on the platform
-
-**Prompt Engineering**
-
-- System prompt defines role and boundaries
-- Context injection from database (RAG)
-- Guardrails to prevent hallucinations
-
----
-
-### 2. AI Listing Description Generator
-
-Helps hosts create polished listings.
-
-**Input**
-
-- Bullet points (location, amenities, rules)
-
-**Output**
-
-- Clean English description
-- Optional Nepali translation
-- Tone control (budget / standard / premium)
-
----
-
-### 3. Review Summarization
-
-Summarizes multiple guest reviews into concise insights.
-
----
-
-## 🔐 Authentication & Authorization
-
-- JWT-based authentication
-- Role-based authorization middleware
-- Protected routes for hosts and admins
-- Input validation and error handling
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v18+)
-- PostgreSQL
-- Docker (optional)
-
-### Installation
-
-```bash
-git clone https://github.com/your-username/nepal-accommodation-api.git
-cd nepal-accommodation-api
-npm install
-```
-
-### Environment Variables
-
-Create a `.env` file:
-
-```env
+```text
 PORT=3000
-DATABASE_URL=postgresql://user:password@localhost:5432/nepal_stays
-JWT_SECRET=your_secret_key
-OPENAI_API_KEY=your_openai_key
+NODE_ENV=development
+
+# Database (Use 'db' for host inside Docker, 'localhost' for local)
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_NAME=stay_tracker
+DB_HOST=db
+DB_PORT=5432
+
+# Authentication
+JWT_SECRET=super_secret_key_change_me
+
 ```
 
-### Run the Server
+### 2. Launch with Docker
+
+Run the entire stack (API, Postgres, Adminer):
 
 ```bash
-npm run dev
-```
-
-API will be available at:
+docker compose up -d --build
 
 ```
-http://localhost:3000
+
+- **API:** `http://localhost:3000`
+- **Adminer (DB GUI):** `http://localhost:8080` (Server: `db`, System: `PostgreSQL`)
+
+### 3. Running Migrations
+
+Migrations run automatically on server start. To manually run or check status:
+
+```bash
+# Run migrations inside container
+docker exec -it node_api npm run db:migrate
+
+# Rollback last migration
+docker exec -it node_api npx ts-node src/db/migrator.ts down
+
 ```
 
 ---
 
-## 🧪 Testing & Demo Data
+## 🛠 Development Commands
 
-- Seed scripts included for demo listings and users
-- Mock bookings (no real payments)
-- Suitable for local testing and portfolio demos
-
----
-
-## 🧭 Project Scope & Limitations
-
-**Included**
-
-- Core booking flow
-- AI-powered assistance
-- Nepal-focused domain logic
-
-**Excluded**
-
-- Real payments
-- Mobile applications
-- Flight booking
-- Legal/tax compliance
-
-These exclusions are intentional to keep the project focused and maintainable.
+| Command                      | Description                                   |
+| ---------------------------- | --------------------------------------------- |
+| `npm run dev`                | Starts the app with Nodemon and ts-node (HMR) |
+| `npm run build`              | Compiles TypeScript to `dist/`                |
+| `npm run start`              | Runs the compiled code from `dist/`           |
+| `docker compose logs -f api` | View live logs from the API container         |
 
 ---
 
-## 📌 Why This Project?
+## 📁 Key Features Included
 
-This project was built to demonstrate:
-
-- Backend system design
-- RESTful API development
-- Database modeling
-- Practical AI integration (not gimmicks)
-- Real-world problem solving in a regional context
+- **Auto-restarting:** Nodemon watches `src/` and restarts the container instantly on save.
+- **Image Uploads:** Pre-configured with **Multer**. Files are saved to `/uploads`.
+- **Type-Safe Validation:** Middleware validates `req.body` using Zod schemas before hitting controllers.
+- **Unified Error Handling:** Centralized middleware for catching and formatting API errors.
 
 ---
 
-## 📄 License
+## 🛑 Common Troubleshooting
 
-This project is for **educational and portfolio purposes only**.
-
----
-
-## 👤 Author
-
-**Yathaartha Maharjan**
-MS in Computer Science
-Full-stack Developer
+- **SASL Auth Error:** Ensure `DB_PASSWORD` in `.env` matches the Postgres container environment.
+- **Connection Refused:** If running the app locally (outside Docker), change `DB_HOST` to `localhost`.
+- **Module Not Found:** Ensure all imports in `.ts` files end with `.js` (e.g., `import x from './file.js'`).
 
